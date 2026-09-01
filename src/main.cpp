@@ -160,13 +160,31 @@ void handleNewMessages(int numNewMessages) {
 
 void handleRoot() { server.send(200, "text/html", HTML_CONTENT); }
 void handleData() {
+  String dangerMsg = "🟢 Semua kondisi lingkungan aman!";
+  if (isGasDanger) {
+    dangerMsg = "🚨 BAHAYA: Kadar Gas Melebihi Batas Threshold!";
+  } else if (isTempDanger) {
+    if (temperature < TEMP_MIN_THRESHOLD) {
+      dangerMsg = "⚠️ BAHAYA: Suhu Terlalu Dingin (Ekstrem)!";
+    } else {
+      dangerMsg = "🔥 BAHAYA: Suhu Melebihi Batas Threshold!";
+    }
+  } else if (isHumDanger) {
+    if (humidity < HUM_MIN_THRESHOLD) {
+      dangerMsg = "💧 BAHAYA: Kelembapan Terlalu Kering!";
+    } else {
+      dangerMsg = "💦 BAHAYA: Kelembapan Terlalu Tinggi!";
+    }
+  }
+
   String json = "{";
   json += "\"temp\":" + String((float)temperature, 1) + ",";
   json += "\"hum\":" + String((float)humidity, 1) + ",";
   json += "\"gas\":" + String((int)gasValue) + ",";
   json += "\"temp_danger\":" + String(isTempDanger ? "true" : "false") + ",";
   json += "\"hum_danger\":" + String(isHumDanger ? "true" : "false") + ",";
-  json += "\"gas_danger\":" + String(isGasDanger ? "true" : "false");
+  json += "\"gas_danger\":" + String(isGasDanger ? "true" : "false") + ",";
+  json += "\"message\":\"" + dangerMsg + "\"";
   json += "}";
   server.send(200, "application/json", json);
 }
