@@ -15,7 +15,7 @@ const char* ssid     = "Raspberry R7";
 const char* password = "wlanebc417";  
 
 #define BOT_TOKEN    "8655285800:AAGUqsqs2eO-aJusp84Grln9ie-wDp0T6a0" 
-#define CHANNEL_ID "-1003701371588" 
+#define GRUP_ID "-1003701371588" 
 
 // ================= PIN MAPPING ARDUTECH ESP32 V4 =================
 #define DHTPIN        15    
