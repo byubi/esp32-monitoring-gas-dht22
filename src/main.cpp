@@ -15,7 +15,7 @@ const char* ssid     = "Raspberry R7";
 const char* password = "wlanebc417";  
 
 #define BOT_TOKEN    "8655285800:AAGUqsqs2eO-aJusp84Grln9ie-wDp0T6a0" 
-#define CHANNEL_ID   "@esp32_safety_system" 
+#define CHANNEL_ID "-1003701371588" 
 
 // ================= PIN MAPPING ARDUTECH ESP32 V4 =================
 #define DHTPIN        15    
@@ -38,7 +38,7 @@ const float HUM_MIN_THRESHOLD  = 30.0;
 const float HUM_MAX_THRESHOLD  = 90.0; 
 const int   GAS_THRESHOLD      = 1000; 
 
-const unsigned long REPORT_INTERVAL = 600000;       // Broadcast Laporan Tiap 10 Menit
+const unsigned long REPORT_INTERVAL = 60000;       // Broadcast Laporan 1 menit
 const unsigned long TELEGRAM_CHECK_INTERVAL = 3000; // Cek Telegram Tiap 3 Detik
 
 DHT dht(DHTPIN, DHTTYPE);
@@ -306,7 +306,7 @@ void loop() {
       if (bot.sendMessage(CHANNEL_ID, "✅ Kadar Gas Kembali Normal: " + String((int)gasValue) + " ADC", "")) gasAlertSent = false;
     }
 
-    // Broadcast Rutin Tiap 10 Menit
+    // Broadcast Rutin Tiap 1 menit
     if (currentMillis - lastReportTime >= REPORT_INTERVAL) {
       lastReportTime = currentMillis;
       bot.sendMessage(CHANNEL_ID, getStatusReport(), "");
